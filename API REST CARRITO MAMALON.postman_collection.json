@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "45e24e1d-d27a-4301-a08a-3923b93009b9",
+		"name": "API REST CARRITO MAMALON",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37983961"
+	},
+	"item": [
+		{
+			"name": "Get ALL Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Users",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/delete/675cb4a306f9daf9092872cf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"delete",
+						"675cb4a306f9daf9092872cf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE CART",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\":\"675cb4a306f9daf9092872cf\",\r\n    \"items\": [\r\n        {\"product\":\"675ca87306f9daf909259108\",\r\n        \"quantity\": 5}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/cart/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CLOSE CART",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/cart/close/675cb4b9342340cc4bc9c6a7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cart",
+						"close",
+						"675cb4b9342340cc4bc9c6a7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jose Diaz\",\r\n    \"email\": \"jolidiazca@ittepic.edu.mx\",\r\n    \"password\": \"12345\",\r\n    \"role\": \"ADMIN\",\r\n    \"facturapi_customer\": {\r\n        \"legal_name\": \"Jose Diaz S.A\",\r\n        \"tax_id\": \"ABC101010111\",\r\n        \"tax_system\": \"601\",\r\n        \"address\": {\r\n            \"zip\": \"63190\"\r\n        },\r\n        \"email\": \"jolidiazca@ittepic.edu.mx\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

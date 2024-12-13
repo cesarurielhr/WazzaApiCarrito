@@ -6,6 +6,6 @@ const userController = require('../Controllers/userController');
 router.get('/users', userController.getAllUsers); // Obtener todos los usuarios
 router.get('/users/:id', userController.getUserById); // Obtener usuario por ID
 router.post('/users', userController.createUser); // Crear un usuario (con Facturapi)
-router.delete('/users/facturapi/:facturapiId', userController.deleteUserByFacturapiId); // Eliminar usuario (de MongoDB y Facturapi)
+router.delete('/users/delete/:userId', userController.deleteUserByFacturapiId); // Eliminar usuario (de MongoDB y Facturapi)
 
 module.exports = router;

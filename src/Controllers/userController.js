@@ -3,7 +3,7 @@ const { createCustomer, deleteCustomer } = require('../Apis/facturapi'); // Serv
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.getAllUsers();
+        const users = await User.find();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -54,19 +54,21 @@ exports.createUser = async (req, res) => {
 // Eliminar un usuario de MongoDB y Facturapi
 exports.deleteUserByFacturapiId = async (req, res) => {
     try {
-        const facturapiId = req.params.facturapiId;
+        const {userId} = req.params;
+        const user = await User.findByIdAndDelete(userId);
 
-        // Eliminar de Facturapi
-        await deleteCustomer(facturapiId);
-        console.log(`Cliente con ID ${facturapiId} eliminado en Facturapi`);
+        if (!user) {
+           return res.status(400).json({message: `No se encontro el usuario ಥ_ಥ`});
+        }
 
-        // Eliminar de MongoDB
-        const user = await User.findOneAndDelete({ facturapiId });
-        if (user) return res.status(404).json({ message: 'Usuario no encontrado' });
+        if(user.facturapi_customer){
+           await deleteCustomer(user.facturapi_customer.id);
+        }
 
-        res.json({ message: 'Usuario eliminado', user });
+        return res.status(200).json(user);
+        
     } catch (error) {
-        console.error('Error en la eliminación del usuario:', error.message);
-        res.status(400).json({ message: 'No se pudo eliminar el usuario.' });
+        console.error(error);
+        return res.status(400).json({message: `No se pudo eliminar el usuario ＼（〇_ｏ）／ ${error.message}`});
     }
 };
