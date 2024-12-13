@@ -1,5 +1,5 @@
 const ShoppingCart = require('../Models/shoppingCardModels');
-const Product = require('../Models/productsModels');
+const Product = require('../Models/productModels');
 const User = require('../Models/userModels');
 const facturapi = require('../Apis/facturapi');
 const { orderStatus } = require('../utils/enums');

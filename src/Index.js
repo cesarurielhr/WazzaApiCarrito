@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./Routes/userRoutes');
-const productsRoutes = require('./Routes/productsRoutes');
+const productsRoutes = require('./Routes/productRoutes');
 const cartRoutes = require('./Routes/cartRoutes');
 const fileUpload = require('express-fileupload');  // Declaración correcta
 
