@@ -1,8 +1,9 @@
-const userModels = require('../Models/userModels');
+const User = require('../Models/userModels');
+const { createCustomer, deleteCustomer } = require('../Apis/facturapi'); // Servicios de Facturapi
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await userModels.getAllUsers();
+        const users = await User.getAllUsers();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -11,36 +12,61 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
-        const user = await userModels.getUserById(req.params.id);
+        const user = await User.getUserById(req.params.id);
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ error: error.message });
-    }
-};
-
-exports.createUser = async (req, res) => {
-    try {
-        const user = await userModels.createUser(req.body);
-        res.status(201).json(user);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
     }
 };
 
 exports.deleteUser = async (req, res) => {
     try {
-        const user = await userModels.deleteUser(req.params.id);
+        const user = await User.deleteUser(req.params.id);
         res.status(200).json(user);
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
 };
 
-exports.createFacturapiCustomer = async (req, res) => {
+// Crear un usuario y sincronizar con Facturapi
+exports.createUser = async (req, res) => {
     try {
-        const user = await userModels.createFacturapiCustomer(req.params.id, req.body);
+        const customer = req.body.facturapi_customer
+        // Crear cliente en Facturapi
+        const facturapiResponse = await createCustomer(customer);
+        console.log('Usuario creado en Facturapi:', facturapiResponse);
+
+        // Guardar en MongoDB con el ID de Facturapi como _id
+        const user = new User({
+            _id: facturapiResponse.id, // Asignar el ID de FacturAPI como _id
+            ...req.body, // Incluir el resto de los datos del cuerpo de la solicitud
+            facturapiId: facturapiResponse.id // Guardar el ID de FacturAPI por consistencia
+        });
+        await user.save();
+
         res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error('Error en la creación del usuario:', error.message);
+        res.status(400).json({ message: 'No se pudo crear el usuario.' });
+    }
+};
+
+// Eliminar un usuario de MongoDB y Facturapi
+exports.deleteUserByFacturapiId = async (req, res) => {
+    try {
+        const facturapiId = req.params.facturapiId;
+
+        // Eliminar de Facturapi
+        await deleteCustomer(facturapiId);
+        console.log(`Cliente con ID ${facturapiId} eliminado en Facturapi`);
+
+        // Eliminar de MongoDB
+        const user = await User.findOneAndDelete({ facturapiId });
+        if (user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+        res.json({ message: 'Usuario eliminado', user });
+    } catch (error) {
+        console.error('Error en la eliminación del usuario:', error.message);
+        res.status(400).json({ message: 'No se pudo eliminar el usuario.' });
     }
 };

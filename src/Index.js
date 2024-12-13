@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./Routes/userRoutes');
+const fileUpload = require('express-fileupload');  // Declaración correcta
 
 // Configurar el servidor Express
 const app = express();
@@ -11,8 +12,19 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './uploads' // Directorio temporal para los archivos
+}));
+
+app.get('/', (req, res, next) => {
+    res.send(
+        `<h1>API RESTFULL de Carrito de Compras</h1> <p> Leer: <a href="docs.com">api-tasks-docs</a> para mas información.</p>`
+    );
+});
+
 // Usar rutas
-app.use('/users', userRoutes);
+app.use('/api', userRoutes);
 
 // Conexión a la base de datos y arranque del servidor
 mongoose.connect('mongodb+srv://admin:admin@apirestcarrito.f2fyz.mongodb.net/?retryWrites=true&w=majority&appName=APIRestCarrito', {
