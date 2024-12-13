@@ -312,7 +312,7 @@ const closeShoppingCart = async (req, res) => {
         cart.isActive = false;
         cart.closedAt = new Date();
         await cart.save();
-        return cart;
+        return res.status(200).json(cart);
     } catch (error) {
         console.error(error);
         throw new Error(`Error al cerrar el carrito: ${error.message}`);
