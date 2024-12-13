@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./Routes/userRoutes');
+const productsRoutes = require('./Routes/productsRoutes');
 
 // Configurar el servidor Express
 const app = express();
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 // Usar rutas
 app.use('/users', userRoutes);
+app.use('/products', productsRoutes);
 
 // Conexión a la base de datos y arranque del servidor
 mongoose.connect('mongodb+srv://admin:admin@apirestcarrito.f2fyz.mongodb.net/?retryWrites=true&w=majority&appName=APIRestCarrito', {

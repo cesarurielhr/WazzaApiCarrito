@@ -1,4 +1,3 @@
-const { create } = require('../models/shoppingCartModel');
 const fs = require('fs');
 require('dotenv').config();
 const Facturapi = require('facturapi').default;
