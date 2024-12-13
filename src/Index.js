@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use('/users', userRoutes);
 
 // Conexión a la base de datos y arranque del servidor
-mongoose.connect('mongodb+srv://admin:admin@cluster0.yelht.mongodb.net/tet01?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://admin:admin@apirestcarrito.f2fyz.mongodb.net/?retryWrites=true&w=majority&appName=APIRestCarrito', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
