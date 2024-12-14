@@ -1,4 +1,4 @@
-const Product = require('../Models/productModels');
+const Product = require('../Models/productModel');
 const facturapi = require('../Apis/facturapi');
 
 exports.getAllProducts = async (req, res) => {

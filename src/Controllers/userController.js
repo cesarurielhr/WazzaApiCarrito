@@ -1,4 +1,4 @@
-const User = require('../Models/userModels');
+const User = require('../Models/userModel');
 const { createCustomer, deleteCustomer } = require('../Apis/facturapi'); // Servicios de Facturapi
 
 exports.getAllUsers = async (req, res) => {
